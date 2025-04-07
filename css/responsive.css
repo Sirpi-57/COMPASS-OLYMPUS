@@ -1,0 +1,337 @@
+/* Responsive Design Styles */
+/* These styles ensure the application works well across different device sizes */
+
+/* Large Desktop (1200px and above) */
+@media (min-width: 1200px) {
+    .app-container {
+        max-width: 1200px;
+        padding: 1.5rem;
+    }
+    
+    main {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    #map {
+        height: 650px;
+    }
+    
+    .chat-messages {
+        max-height: 550px;
+    }
+}
+
+/* Desktop (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .app-container {
+        max-width: 960px;
+        padding: 1.2rem;
+    }
+    
+    main {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    #map {
+        height: 550px;
+    }
+    
+    .chat-messages {
+        max-height: 450px;
+    }
+}
+
+/* Tablet (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .app-container {
+        max-width: 720px;
+        padding: 1rem;
+    }
+    
+    main {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2rem;
+    }
+    
+    #map {
+        height: 450px;
+    }
+    
+    .chat-messages {
+        max-height: 400px;
+    }
+    
+    .property-specs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .property-amenities ul,
+    .property-nearby ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile Landscape (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .app-container {
+        padding: 0.8rem;
+    }
+    
+    main {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    #map {
+        height: 400px;
+    }
+    
+    .chat-messages {
+        min-height: 300px;
+        max-height: 350px;
+    }
+    
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+    }
+    
+    .property-details-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .property-rent {
+        margin-top: 10px;
+    }
+    
+    .property-specs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    
+    .results-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+/* Mobile Portrait (up to 575px) */
+@media (max-width: 575px) {
+    .app-container {
+        padding: 0.5rem;
+    }
+    
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+    
+    .theme-toggle {
+        align-self: flex-end;
+    }
+    
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+    
+    main {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    #map {
+        height: 300px;
+    }
+    
+    .map-legend {
+        bottom: 5px;
+        right: 5px;
+        padding: 5px;
+        max-width: 120px;
+    }
+    
+    .map-legend h3 {
+        font-size: 10px;
+        margin-bottom: 5px;
+    }
+    
+    .map-legend ul {
+        font-size: 8px;
+    }
+    
+    .map-legend li {
+        margin-bottom: 2px;
+    }
+    
+    .marker-icon {
+        width: 8px;
+        height: 8px;
+        margin-right: 4px;
+    }
+    
+    .chat-messages {
+        min-height: 250px;
+        max-height: 300px;
+        padding: 0.5rem;
+    }
+    
+    .message {
+        max-width: 95%;
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .chat-input {
+        padding: 0.5rem;
+    }
+    
+    .chat-input input {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .chat-input button {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .example-queries p {
+        font-size: 0.8rem;
+    }
+    
+    .query-chip {
+        font-size: 0.7rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 10px;
+    }
+    
+    .property-details-header h2 {
+        font-size: 1.3rem;
+    }
+    
+    .property-rent {
+        font-size: 1.1rem;
+    }
+    
+    .property-specs {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .property-amenities ul,
+    .property-nearby ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .results-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.8rem;
+    }
+    
+    .results-header h2 {
+        font-size: 1rem;
+    }
+    
+    .results-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .results-actions button {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+    
+    .results-table-container {
+        max-height: 250px;
+    }
+    
+    #results-table th, 
+    #results-table td {
+        padding: 0.3rem;
+        font-size: 0.7rem;
+    }
+    
+    /* Hide more columns on very small screens */
+    #results-table th:nth-child(3),
+    #results-table td:nth-child(3),
+    #results-table th:nth-child(4),
+    #results-table td:nth-child(4),
+    #results-table th:nth-child(5),
+    #results-table td:nth-child(5),
+    #results-table th:nth-child(7),
+    #results-table td:nth-child(7) {
+        display: none;
+    }
+    
+    .view-details-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .app-container {
+        padding: 0;
+    }
+    
+    header, 
+    .chat-container, 
+    .map-container, 
+    .results-actions, 
+    footer {
+        display: none;
+    }
+    
+    .results-section {
+        box-shadow: none;
+        margin: 0;
+    }
+    
+    .results-header h2 {
+        font-size: 18pt;
+        margin-bottom: 10pt;
+    }
+    
+    #results-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    #results-table th, 
+    #results-table td {
+        border: 1px solid #000;
+        padding: 5pt;
+    }
+    
+    .view-details-btn {
+        display: none;
+    }
+}

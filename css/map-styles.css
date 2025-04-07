@@ -1,0 +1,287 @@
+/* Map Styles */
+.map-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    background-color: var(--card-background);
+}
+
+#map {
+    width: 100%;
+    height: 500px;
+    z-index: 1;
+}
+
+.map-legend {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    font-size: 12px;
+    z-index: 10;
+    max-width: 150px;
+}
+
+.dark-theme .map-legend {
+    background-color: rgba(45, 45, 45, 0.9);
+}
+
+.map-legend h3 {
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+
+.map-legend ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.map-legend li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.marker-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.marker-icon.apartment {
+    background-color: #4285f4;
+}
+
+.marker-icon.house {
+    background-color: #34a853;
+}
+
+.marker-icon.studio {
+    background-color: #9c27b0;
+}
+
+.marker-icon.villa {
+    background-color: #ff9800;
+}
+
+.marker-icon.penthouse {
+    background-color: #ea4335;
+}
+
+/* Directions Panel */
+#directions-panel {
+    display: none;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: var(--card-background);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    font-size: 14px;
+}
+
+.dark-theme #directions-panel {
+    background-color: var(--card-background);
+    color: var(--text-color);
+}
+
+#directions-panel .adp-placemark {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+}
+
+#directions-panel .adp-summary {
+    padding: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+#directions-panel .adp-directions {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#directions-panel .adp-directions td {
+    padding: 5px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Clear Directions Button */
+.clear-directions-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: none;
+}
+
+.dark-theme .clear-directions-btn {
+    background-color: var(--card-background);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.clear-directions-btn:hover {
+    background-color: var(--hover-color);
+}
+
+/* API Configuration Modal Styles */
+.api-config-content {
+    padding: 10px;
+}
+
+.api-input-group {
+    margin-bottom: 15px;
+}
+
+.api-input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.api-input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+#save-api-keys-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#save-api-keys-btn:hover {
+    background-color: var(--primary-color-dark);
+}
+
+.api-help {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.api-help h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.api-help p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.api-help a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.api-help a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Buttons */
+.footer-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#api-config-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+#api-config-btn:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Map Styles */
+@media (max-width: 1024px) {
+    #map {
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    #map {
+        height: 400px;
+    }
+    
+    .map-legend {
+        bottom: 5px;
+        right: 5px;
+        padding: 8px;
+        font-size: 10px;
+        max-width: 120px;
+    }
+    
+    .map-legend h3 {
+        font-size: 12px;
+    }
+    
+    #directions-panel {
+        max-height: 200px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    #map {
+        height: 300px;
+    }
+    
+    .map-legend {
+        padding: 5px;
+        font-size: 9px;
+        max-width: 100px;
+    }
+    
+    .map-legend h3 {
+        font-size: 10px;
+    }
+    
+    .marker-icon {
+        width: 8px;
+        height: 8px;
+    }
+    
+    #directions-panel {
+        max-height: 150px;
+        font-size: 11px;
+    }
+    
+    .clear-directions-btn {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMPASS OLYMPUS</title>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/map-styles.css">
+    <link rel="stylesheet" href="css/chat-styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <link rel="stylesheet" href="css/table-styles.css">
+    <link rel="stylesheet" href="css/voice-styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PapaParse for CSV parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- Google Maps API -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNDmXsoIvbW0s1dScrup0v0qwrDNb2w4k&libraries=places&callback=initializeApp"></script>
+    
+    <!-- MarkerClusterer for Google Maps -->
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="chatbot1.jpg" alt="COMPASS Logo" onerror="this.src='https://via.placeholder.com/40x40?text=CPS'">
+                    <div class="title-container">
+                        <h1>COMPASS <span class="highlight">OLYMPUS</span></h1>
+                        <h2>Comprehensive Observational Multi-Platform Analytical Support System</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="header-controls">
+                <div class="theme-toggle">
+                    <button id="theme-toggle-btn">
+                        <i class="fas fa-moon"></i>
+                        <span>Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="map-legend">
+                    <h3>Property Types</h3>
+                    <ul>
+                        <li><span class="marker-icon apartment"></span> Apartments</li>
+                        <li><span class="marker-icon house"></span> Independent Houses</li>
+                        <li><span class="marker-icon studio"></span> Studio Apartments</li>
+                        <li><span class="marker-icon villa"></span> Villas</li>
+                        <li><span class="marker-icon penthouse"></span> Penthouses</li>
+                    </ul>
+                </div>
+                <div id="directions-panel"></div>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Ask about properties in Chennai...">
+                    <button id="voice-input-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <button id="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="example-queries">
+                    <p>Try asking:</p>
+                    <div class="query-chips">
+                        <button class="query-chip">Show me 2BHK apartments in Adyar</button>
+                        <button class="query-chip">Find houses under 20,000 rupees</button>
+                        <button class="query-chip">Pet-friendly properties in Anna Nagar</button>
+                        <button class="query-chip">Fully furnished flats in T. Nagar</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div class="results-section">
+            <div class="results-header">
+                <h2>Search Results <span id="result-count">(0 properties)</span></h2>
+                <div class="results-actions">
+                    <button id="export-csv-btn">Export CSV</button>
+                    <button id="export-pdf-btn">Export PDF</button>
+                    <button id="toggle-results-btn">Hide Results</button>
+                </div>
+            </div>
+            <div class="results-table-container">
+                <table id="results-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="PropertyType">Type</th>
+                            <th data-sort="BHK">BHK</th>
+                            <th data-sort="Locality">Locality</th>
+                            <th data-sort="BuildingName">Building</th>
+                            <th data-sort="Area">Area (sq.ft)</th>
+                            <th data-sort="Rent">Rent (₹)</th>
+                            <th data-sort="FurnishingStatus">Furnishing</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <!-- Results will be added here dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Property Details Modal -->
+        <div id="property-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div id="property-details">
+                    <!-- Property details will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="help-content">
+                    <h2>How to Use Chennai Property Search</h2>
+                    <div class="help-section">
+                        <h3>Chat Interface</h3>
+                        <p>Type natural language queries or use voice input to search for properties. Example: "Show me 2BHK apartments in Adyar under 25,000"</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>Map Navigation</h3>
+                        <p>Use the map controls to zoom in/out and pan. Click on markers to see property details.</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>Directions</h3>
+                        <p>Click "Get Directions" on any property to find the route from your current location to the property.</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>Results Table</h3>
+                        <p>Sort results by clicking on column headers. Export results to CSV or PDF using the buttons above the table.</p>
+                    </div>
+                    <div class="help-section">
+                        <h3>Voice Features</h3>
+                        <p>Click the microphone button to use voice input. The application can also read responses aloud.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Chennai Property Search | Prototype for nobroker.com</p>
+                <div class="footer-buttons">
+                    <button id="help-btn">Help</button>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Application JS -->
+    <!-- Application JS -->
+    <script src="js/api-config.js"></script>
+    <script src="js/map-manager.js"></script>  
+    <script src="js/data-loader.js"></script>
+    <script src="js/results-table.js"></script> <!-- Make sure this loads before ui-controller.js -->
+    <script src="js/ui-controller.js"></script>
+    <script src="js/chat-interface.js"></script>
+    <script src="js/llm-service.js"></script>
+    <script src="js/filter-processor.js"></script>
+    <script src="js/speech-manager.js"></script>
+    <script src="js/export-service.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

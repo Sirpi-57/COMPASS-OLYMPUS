@@ -1,0 +1,203 @@
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.close-modal:hover {
+    opacity: 1;
+}
+
+/* Property Details Styles */
+.property-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.property-details-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.property-rent {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--success-color);
+}
+
+.property-location {
+    margin-bottom: 20px;
+}
+
+.property-location h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+}
+
+.property-location p {
+    margin: 0;
+    color: var(--text-color-secondary);
+}
+
+.property-specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-label {
+    font-size: 0.9rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 5px;
+}
+
+.spec-value {
+    font-weight: bold;
+}
+
+.property-description,
+.property-amenities,
+.property-nearby,
+.property-contact {
+    margin-bottom: 20px;
+}
+
+.property-description h3,
+.property-amenities h3,
+.property-nearby h3,
+.property-contact h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.property-amenities ul,
+.property-nearby ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.property-contact p {
+    margin: 5px 0;
+}
+
+/* Help Modal Styles */
+.help-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.help-section {
+    margin-bottom: 20px;
+}
+
+.help-section h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.help-section p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Responsive Modal Styles */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+    
+    .property-details-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .property-rent {
+        margin-top: 10px;
+    }
+    
+    .property-specs {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .property-amenities ul,
+    .property-nearby ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 10px;
+    }
+    
+    .property-details-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .property-rent {
+        font-size: 1.3rem;
+    }
+}

@@ -1,0 +1,319 @@
+Project Overview
+Create a responsive web application that combines interactive mapping with AI chat capabilities to help users find rental properties in Chennai. The application should allow users to search for properties using natural language (text or voice), visualize results on a map, and interact with property listings. This is a prototype for nobroker.com to showcase AI-integrated property search functionality.
+Core Functionality Requirements
+1. Interactive Map Component
+
+Implement a Leaflet-based map centered on Chennai (13.0827° N, 80.2707° E) with appropriate zoom level
+Create custom markers to represent different property types/price ranges with distinct colors:
+
+Apartments: Blue markers
+Independent Houses: Green markers
+Studio Apartments: Purple markers
+Villas: Orange markers
+Penthouses: Red markers
+
+
+Enable clicking on markers to display detailed property information
+Include map controls for resetting view, toggling fullscreen, etc.
+Implement responsive behavior for mobile vs desktop viewing
+
+2. AI Chat Interface
+
+Build a chat window that allows users to type or use voice to query properties
+Implement speech recognition for voice input using Web Speech API
+Add speech synthesis to read back responses for better accessibility
+Process natural language queries about properties (e.g., "Show me 2BHK flats in Adyar under 25,000")
+Display typing indicators while the AI is processing
+Include a welcome message to explain the assistant's capabilities
+Add example queries that users can click on to try
+
+3. Data Processing & Filtering
+
+Use the provided 'chennai_data.csv' file which contains 500 property records with these fields:
+
+PropertyID
+PropertyType (Apartment, Independent House, Studio Apartment, Villa, Penthouse)
+BHK (1, 2, 3, etc.)
+Area (in sq. ft.)
+Rent (monthly in ₹)
+Locality/Neighborhood
+BuildingName
+Address
+Latitude
+Longitude
+Amenities (comma-separated list)
+FurnishingStatus (Unfurnished, Semi-furnished, Fully-furnished)
+AvailableFrom (date)
+MaintenanceCharges
+Deposit (in ₹)
+PetsAllowed (Yes/No)
+OwnerName
+OwnerContact
+LastUpdated (date)
+PropertyAge (in years)
+Description (brief text about property)
+NearbyPlaces (schools, hospitals, malls, etc.)
+
+
+
+4. Property Details Display
+
+Create a side panel or modal to display detailed property information when a marker is clicked
+Include expandable/collapsible sections for different types of information
+Add high-contrast "Call Owner" and "Get Directions" buttons
+Implement a simulated call functionality (just show a dialog with owner information)
+Add directions functionality that opens the native maps application with directions to the property
+Include a gallery placeholder for property images
+
+5. Results Data Table
+
+Create a collapsible data table below the chat that shows filtered results
+Allow users to sort results by different criteria
+Enable exporting results to CSV or PDF
+Show count of matching properties
+Make the table responsive for mobile viewing
+
+Technical Implementation Requirements
+1. LLM Integration and API Setup
+
+Use Google's Gemini API (or any preferred LLM API) for natural language understanding
+Implement the API connection with proper error handling and rate limiting
+Create a configuration section in the code where the API key can be set
+Add client-side API key validation and error messaging for misconfigured API keys
+Include a fallback mechanism to handle API outages or exceeded quotas
+Structure the API requests to handle conversation context for follow-up questions
+Implement a prompt templating system:
+
+System instructions to define the AI's role and capabilities
+Context inclusion from conversation history
+Clear formatting guidelines for structured JSON responses
+Safety settings to ensure appropriate responses
+
+
+
+2. Filtering Mechanism Implementation
+
+Create a two-step filtering process:
+
+Use the LLM to extract structured filter criteria from natural language queries
+Apply those criteria to the property dataset programmatically
+
+
+Implement the following specific filtering capabilities:
+
+Extract location preferences (neighborhoods, landmarks, specific addresses)
+Parse price ranges (e.g., "under 20,000", "between 15,000 and 25,000")
+Identify BHK requirements (1BHK, 2BHK, etc.)
+Recognize amenity requests (with gym, with parking, etc.)
+Process furnishing status preferences
+Handle building name searches
+Process pet-friendliness requirements
+Handle complex queries with multiple criteria
+
+
+Create a JSON schema for filter criteria output from the LLM:
+
+jsonCopy{
+  "locality": ["Adyar", "Velachery"], // Can be multiple
+  "bhk": [2, 3], // Can be multiple
+  "maxRent": 25000, // Upper price limit
+  "minRent": 15000, // Lower price limit
+  "amenities": ["gym", "parking"], // Required amenities
+  "furnishingStatus": "semi-furnished", // Furnishing preference
+  "propertyType": "apartment", // Type of property
+  "buildingName": "Crystal", // Partial building name search
+  "sortBy": "rent", // Sorting preference
+  "nearbyRequirement": "school", // Nearby facility requirement
+  "petsAllowed": true // Pet preference
+}
+
+Implement JavaScript functions to:
+
+Parse this JSON structure
+Apply filters to the property dataset
+Handle special cases (e.g., "near metro station" would filter by proximity to metro stations)
+Return filtered results that can be displayed on the map and in the data table
+
+
+Include fallback handling for vague queries with prompt asking for clarification
+
+3. User Interface Design
+
+Implement a clean, modern UI using CSS with proper color contrast
+Create a responsive layout that works on mobile (stack map on top, chat below) and desktop (side-by-side)
+Add a dark/light theme toggle
+Include loading states and smooth transitions between views
+Create intuitive controls for voice input with visual feedback
+Design custom map markers and popups that match the overall aesthetic
+Use a color scheme that aligns with nobroker.com branding (blues, whites, with accent colors)
+
+4. Data Structure & Management
+
+Load and parse the 'chennai_data.csv' file
+Create efficient filtering functions for each property field
+Implement text search for building names and descriptions
+Cache recent query results to improve performance
+Include data validation to handle edge cases and missing information
+Store and manage conversation history for context-aware responses
+
+5. Natural Language Processing
+
+Design the following specific LLM prompts:
+
+A prompt for extracting filter criteria from user queries
+A prompt for generating contextual responses based on filtered results
+A prompt for handling ambiguous or unclear queries
+
+
+Implement conversation chaining to maintain context through multiple interactions
+Structure prompts to include:
+
+Clear instructions on expected output format (JSON)
+Examples of how to interpret different types of queries
+Guidelines on handling ambiguity and asking clarifying questions
+Instructions for generating concise, helpful responses
+
+
+Example prompt structure:
+
+CopyYou are an AI assistant specializing in Chennai real estate. Your task is to:
+1. Analyze the user's query about properties
+2. Extract relevant filter criteria
+3. Return ONLY a JSON object with these criteria
+4. Do not include explanations or additional text
+
+Available filter fields: locality, bhk, maxRent, minRent, amenities, furnishingStatus, propertyType, buildingName, sortBy, nearbyRequirement, petsAllowed
+
+Example query: "Show me 2BHK apartments in Adyar under 25,000"
+Expected JSON output: {"locality": ["Adyar"], "bhk": [2], "maxRent": 25000, "propertyType": "apartment"}
+
+Recent conversation context:
+{CONVERSATION_HISTORY}
+
+User query: {USER_QUERY}
+6. Map Visualization
+
+Implement marker creation based on filtered data results
+Add color coding for markers based on property types:
+
+Apartments: Blue markers
+Independent Houses: Green markers
+Studio Apartments: Purple markers
+Villas: Orange markers
+Penthouses: Red markers
+
+
+Add price-based size variation for markers (more expensive = slightly larger markers)
+Include a legend to explain marker colors
+Create custom popups with properly formatted property information
+Implement bounding to ensure all relevant properties are visible on map after filtering
+Add clustering for areas with many properties
+
+7. Voice Interface
+
+Implement robust speech recognition with Indian English language support
+Add visual feedback during voice recording
+Implement error handling for speech recognition issues
+Create a voice response system that reads back key information
+
+8. Data Table Management
+
+Create a dynamic table that updates based on filtered results
+Implement sorting functionality on multiple columns (rent, area, BHK, etc.)
+Add pagination for handling large result sets
+Create CSV and PDF export functionality
+Style the table for both desktop and mobile views
+Include property type and building name prominently in the results
+
+HTML Structure
+Start with a responsive layout featuring:
+
+A header with logo and controls
+A main content area with:
+
+Map component (left/top on mobile)
+Chat interface (right/bottom on mobile)
+
+
+A collapsible data table for results
+Modals for property details, help information
+A fixed footer with attribution/copyright
+
+JavaScript Implementation Details
+Create the following key JavaScript modules:
+
+main.js: Core application initialization and event handling
+data-loader.js: Loading and parsing the chennai_data.csv file
+map-manager.js: Leaflet integration and map controls
+chat-interface.js: Chat UI and message handling
+llm-service.js: API integration with the LLM provider
+filter-processor.js: Processing JSON filter criteria and filtering data
+speech-manager.js: Voice recognition and synthesis
+ui-controller.js: UI state management and responsive behavior
+results-table.js: Data table creation and management
+export-service.js: CSV and PDF export functionality
+
+Implement these specific functions:
+
+loadData(): For loading and parsing the property dataset
+getFiltersFromLLM(query): To send user query to LLM and get structured filters
+filterData(criteria): To apply the filter criteria to the property dataset
+displayDataOnMap(filteredData): To show filtered properties on the map
+displayDataInTable(filteredData): To update the data table with results
+generateContextualResponse(query, filteredData, criteria): To create natural language responses
+addMessageToChat(message, sender): To update the chat interface
+setupSpeechRecognition(): To initialize voice input
+speakText(text): To provide voice responses
+showPropertyDetails(propertyId): To display property information when marker is clicked
+simulateCallOwner(ownerInfo): To simulate calling the property owner
+getDirections(latitude, longitude): To open directions to the property
+
+CSS Styling
+Create a comprehensive styling system with:
+
+CSS variables for theming
+Mobile-first responsive design
+Custom styling for chat bubbles, markers, and popups
+Animation for transitions and interactive elements
+Accessible color contrast ratios
+Support for dark/light themes
+Styles specific to property type cards and details display
+
+Implementation Notes
+
+Create the application to work entirely in the browser without requiring a backend
+Include clear comments in the code for future development
+Structure the code in a modular way for easy maintenance
+Add helpful tooltips and contextual help
+Include a help/tutorial modal to explain features
+Make the prototype look and feel like a professionally designed product
+Ensure the application loads the CSV data at startup and doesn't require repeated uploads
+
+Essential Features for MVP
+At minimum, ensure these features work in the prototype:
+
+Loading and parsing the chennai_data.csv file correctly
+Property filtering via text chat
+Map visualization of property locations with property-type based color coding
+Property details display on marker click
+Basic voice input and output
+Responsive design for mobile and desktop
+Call owner and get directions buttons
+Dark/light theme toggle
+Building name display in search results and property details
+
+Example Queries to Support
+Ensure the system can handle these types of queries:
+
+"Show me 2BHK apartments in Adyar"
+"Find houses under 20,000 rupees per month"
+"Where can I find fully furnished flats in T. Nagar?"
+"Show me pet-friendly properties in Anna Nagar"
+"I'm looking for an apartment near a metro station"
+"Find villas with a swimming pool"
+"Show me properties in Crystal Towers"
+"What's available in Velachery with 3 bedrooms?"
+"Show me the most affordable 2BHK in Nungambakkam"
+"Find properties with gyms that allow pets"
+
+Please create a well-structured, responsive, and interactive prototype that demonstrates how AI can enhance the property search experience on nobroker.com, with particular attention to usability on mobile devices and proper integration of LLM technology for natural language understanding.
